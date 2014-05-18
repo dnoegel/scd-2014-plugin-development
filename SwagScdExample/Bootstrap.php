@@ -79,9 +79,10 @@ class Shopware_Plugins_Core_SwagScdExample_Bootstrap extends Shopware_Components
      */
     public function onAddConsoleCommand()
     {
-        $this->Application()->Events()->addSubscriber(
-            new Resource(Shopware()->Container())
-        );
+        // Register the resource subscriber in order to have access to ower components from
+        // within the console command
+        $this->registerDefaultSubscriber();
+
         return new SwagScdExampleCommand();
     }
 
@@ -90,7 +91,9 @@ class Shopware_Plugins_Core_SwagScdExample_Bootstrap extends Shopware_Components
      * us to register additional events on the fly. This way you won't ever need to reinstall you
      * plugin for new events - any event and hook can simply be registerend in the event subscribers
      *
-     * We will only register our subscribers here, if we are in frontend.
+     * Notice: We will only register our subscribers here, if we are in frontend.
+     * Notice: This callback won't be triggered when running the CLI tools - that's why we register
+     * our resource subscriber manually in the CLI callback
      *
      */
     public function onStartDispatch(Enlight_Event_EventArgs $args)
@@ -101,6 +104,8 @@ class Shopware_Plugins_Core_SwagScdExample_Bootstrap extends Shopware_Components
             return;
         }
 
+        // In this example we don't want our subscriber to use the global Shopware() singleton.
+        // instead we insert the "global state" directly into the subscriber.
         $amount = Shopware()->Modules()->Basket()->sGetAmount();
         $customerGroup = Shopware()->Session()->sUserGroup;
 
@@ -125,7 +130,12 @@ class Shopware_Plugins_Core_SwagScdExample_Bootstrap extends Shopware_Components
     }
 
     /**
-     * Registers the plugin's namespace
+     * Registers the plugin's namespace. As a convention weh should use
+     *
+     *  Shopwage\Plugins\YourPluginName
+     *
+     * as namespace
+     *
      */
     public function afterInit()
     {
@@ -136,10 +146,13 @@ class Shopware_Plugins_Core_SwagScdExample_Bootstrap extends Shopware_Components
     }
 
     /**
+     * Example for an "old school" event subscriber
+     *
      * Downsides of this approach for tests:
      *  * Global Shopware() object is needed here
      *  * do you really want to test the Enlight_Event_EventArgs object and functions like
      *    Shopware()->Modules()->Basket()->sGetAmount()?
+     *  * do you really want to test the shopware controller?
      *
      *  => see basket subscriber for another approach
      *

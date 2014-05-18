@@ -13,6 +13,7 @@ class Shopware_Controllers_Frontend_SwagScdExample extends Enlight_Controller_Ac
     public function indexAction()
     {
         // Instantiating your class directly
+        // Downside: Why should your controller know about the dependencies of "mycomponent"?
         $myComponent = new \Shopware\Plugins\SwagScdExample\Components\MyComponent(
             $this->get('models')
         );

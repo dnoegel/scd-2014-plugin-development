@@ -53,6 +53,10 @@ class Basket implements SubscriberInterface
      * Here be fancy price calculation - by injection all needed parameters, we don't
      * need any global scope
      *
+     * One might discuss if we really need to bind the global state to the subscriber instead
+     * of passing it directly to the method - Perhaps you want to move the whole price calculation
+     * into a distinct "priceCalculation" class
+     *
      * @return bool
      */
     public function checkoutAllowed()

@@ -7,6 +7,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Example of a simple CLI command
+ *
+ * Class SwagScdExampleCommand
+ * @package Shopware\Plugins\SwagScdExample\Commands
+ */
 class SwagScdExampleCommand extends ShopwareCommand
 {
     /**
@@ -32,8 +38,8 @@ EOF
     /**
      * Execute the command
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param InputInterface $input         User input like arguments / options
+     * @param OutputInterface $output       Output, e.g. printing a message
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)

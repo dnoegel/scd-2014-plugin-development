@@ -22,11 +22,25 @@ class Resource implements SubscriberInterface
      */
     private $container;
 
+    /**
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * Whenever the container looks up a component, it will trigger the event
+     *
+     *  Enlight_Bootstrap_InitResource_{REQUESTED_CLASS_NAME}
+     *
+     * I recommend some namespacing: "MyComponent" might be a very generic name, in order to avoid problems
+     * with other plugins, you should prepend your plugin's name or at least your developer prefix
+     *
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -38,11 +52,21 @@ class Resource implements SubscriberInterface
     }
 
 
+    /**
+     * In the callbacks we just need to return an instance of the requested class
+     *
+     * @return MyComponent
+     */
     public function onInitResourceMyComponent()
     {
         return new MyComponent($this->container->get('models'));
     }
 
+    /**
+     * This callback is already using the DI container to instantiate the class "swagscdexample_mycomponent"
+     *
+     * @return AnotherComponent
+     */
     public function onInitResourceAnotherComponent()
     {
         return new AnotherComponent(
