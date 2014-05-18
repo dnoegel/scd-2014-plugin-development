@@ -1,4 +1,4 @@
-= SwagScdExample
+# SwagScdExample
 
 Some examples from the plugin development talk on the SCD14.
 
