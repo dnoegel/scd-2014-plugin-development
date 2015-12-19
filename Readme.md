@@ -9,4 +9,4 @@ General topics:
  * Cleaning up your classes for unit tests / Using shopware TestHelpers
  * Using CLI tools in shopware
 
-
+Please visit the "[best practice](https://developers.shopware.com/blog/2015/11/11/best-practices-of-shopware-plugin-development/)" guide in the devdocs for more detailed examples.
